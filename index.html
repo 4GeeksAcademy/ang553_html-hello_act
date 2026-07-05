@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="es" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgentHub Admin Console</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class"
+      };
+    </script>
+  </head>
+  <body class="h-full bg-slate-100 text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-100">
+    <div class="min-h-screen md:grid md:grid-cols-[280px_minmax(0,1fr)]">
+      <nav class="border-b border-slate-200 bg-white text-slate-900 md:sticky md:top-0 md:h-screen md:border-b-0 md:border-r dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100">
+        <div class="border-b border-slate-200 px-6 py-7 dark:border-slate-800">
+          <h1 class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">AgentHub</h1>
+          <p class="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">Admin Console</p>
+        </div>
+
+        <ul class="space-y-2 p-4">
+          <li>
+            <a
+              href="#"
+              data-section="dashboard"
+              data-title="Dashboard"
+              class="flex items-center gap-3 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2.5 text-sm font-medium text-blue-700 dark:border-blue-400/30 dark:bg-blue-500/20 dark:text-blue-100"
+              aria-current="page"
+            >
+              <span aria-hidden="true" class="text-base">▦</span>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              data-section="users"
+              data-title="Users"
+              class="flex items-center gap-3 rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white"
+            >
+              <span aria-hidden="true" class="text-base">◯</span>
+              <span>Users</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              data-section="agents"
+              data-title="Agents"
+              class="flex items-center gap-3 rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white"
+            >
+              <span aria-hidden="true" class="text-base">◯</span>
+              <span>Agents</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              data-section="skills"
+              data-title="Skills"
+              class="flex items-center gap-3 rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white"
+            >
+              <span aria-hidden="true" class="text-base">◯</span>
+              <span>Skills</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              data-section="contracts"
+              data-title="Contracts"
+              class="flex items-center gap-3 rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white"
+            >
+              <span aria-hidden="true" class="text-base">◯</span>
+              <span>Contracts</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              data-section="errors"
+              data-title="Error Log"
+              class="flex items-center gap-3 rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white"
+            >
+              <span aria-hidden="true" class="text-base">◯</span>
+              <span>Error Log</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="min-w-0 bg-slate-100 dark:bg-slate-900">
+        <header class="flex h-20 items-center justify-between border-b border-slate-200 bg-white px-4 md:px-6 lg:px-8 dark:border-slate-700 dark:bg-slate-800">
+          <h2 id="active-section-title" class="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">Dashboard</h2>
+          <button id="theme-toggle" type="button" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-700 shadow-sm dark:border-slate-600 dark:bg-slate-700/70 dark:text-slate-100" aria-label="Cambiar tema" title="Toggle theme">
+            <span aria-hidden="true">◐</span>
+            <span id="theme-label">Theme</span>
+          </button>
+        </header>
+
+        <main class="min-w-0 overflow-x-hidden p-4 md:p-6 lg:p-8">
+          <section id="dashboard" class="space-y-6">
+            <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-100">Dashboard</h3>
+
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-agent="Atlas" data-owner="Laura Gomez" data-status="activo" data-skills="Investigacion Web|Analisis de Datos" data-prompt="Eres Atlas. Investiga fuentes confiables, sintetiza hallazgos y entrega resultados con trazabilidad y claridad ejecutiva.">
+                <div class="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">$
+                </div>
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Monthly Revenue</p>
+                <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">$1,660</p>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-agent="Nexo" data-owner="Martin Perez" data-status="fallando" data-skills="Analisis de Datos|Atencion al Cliente" data-prompt="Eres Nexo. Prioriza tickets urgentes, propone respuesta breve y registra causa raiz cuando detectes patrones de error.">
+                <div class="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-rose-100 text-rose-700">%</div>
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Discount Losses</p>
+                <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">$290</p>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-agent="Helix" data-owner="Sofia Rojas" data-status="inactivo" data-skills="Investigacion Web" data-prompt="Eres Helix. Realiza exploracion inicial, valida enlaces y entrega resumen de riesgos por tema.">
+                <div class="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-100 text-blue-700">A</div>
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Active Agents</p>
+                <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">2</p>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-agent="Prisma" data-owner="Valeria Cruz" data-status="activo" data-skills="Analisis de Datos|Atencion al Cliente|Automatizacion QA" data-prompt="Eres Prisma. Ejecuta controles QA, documenta evidencias y reporta desviaciones con severidad accionable.">
+                <div class="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-amber-100 text-amber-700">!</div>
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Failing Agents</p>
+                <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">1</p>
+              </article>
+            </div>
+
+            <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-6 shadow-sm">
+              <h4 class="text-base font-semibold text-slate-900 dark:text-slate-100">Weekly Activity</h4>
+              <div class="mt-4 h-56 rounded-lg border border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50">
+                <div class="flex h-full items-center justify-center text-sm font-medium text-slate-400">Chart placeholder</div>
+              </div>
+            </article>
+          </section>
+
+          <section id="users" class="hidden space-y-5">
+            <div>
+              <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-100">Users</h3>
+            </div>
+
+            <div class="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 shadow-sm">
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                  <thead class="bg-slate-50 dark:bg-slate-700/50">
+                    <tr>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">User</th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Plan</th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Status</th>
+                      <th scope="col" class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-700 dark:bg-slate-800">
+                    <tr class="hover:bg-slate-50 dark:bg-slate-700/50/80" data-user-name="Laura Gomez" data-user-email="laura@agenthub.com" data-user-plan="Pro" data-user-status="Activo" data-user-company="Orbita Labs">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                          <div class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold text-blue-700">LG</div>
+                          <div>
+                            <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Laura Gomez</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">laura@agenthub.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">Pro</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Activo</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="users-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Laura Gomez" aria-expanded="false">⋮</button>
+                          <div class="users-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="users-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="users-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="hover:bg-slate-50 dark:bg-slate-700/50/80" data-user-name="Martin Perez" data-user-email="martin@agenthub.com" data-user-plan="Basico" data-user-status="Activo" data-user-company="Nexo Retail">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                          <div class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700">MP</div>
+                          <div>
+                            <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Martin Perez</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">martin@agenthub.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-slate-200 bg-slate-100 dark:bg-slate-700 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-slate-200">Basico</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Activo</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="users-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Martin Perez" aria-expanded="false">⋮</button>
+                          <div class="users-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="users-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="users-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="hover:bg-slate-50 dark:bg-slate-700/50/80" data-user-name="Sofia Rojas" data-user-email="sofia@agenthub.com" data-user-plan="Enterprise" data-user-status="Activo" data-user-company="Data Vista">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                          <div class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-violet-100 text-sm font-semibold text-violet-700">SR</div>
+                          <div>
+                            <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Sofia Rojas</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">sofia@agenthub.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-purple-200 bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-700">Enterprise</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Activo</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="users-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Sofia Rojas" aria-expanded="false">⋮</button>
+                          <div class="users-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="users-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="users-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="hover:bg-slate-50 dark:bg-slate-700/50/80" data-user-name="Diego Navarro" data-user-email="diego@agenthub.com" data-user-plan="Pro" data-user-status="Inactivo" data-user-company="Clinica Nova">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                          <div class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-200 text-sm font-semibold text-slate-700 dark:text-slate-200">DN</div>
+                          <div>
+                            <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Diego Navarro</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">diego@agenthub.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">Pro</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">Inactivo</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="users-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Diego Navarro" aria-expanded="false">⋮</button>
+                          <div class="users-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="users-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="users-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="hover:bg-slate-50 dark:bg-slate-700/50/80" data-user-name="Valeria Cruz" data-user-email="valeria@agenthub.com" data-user-plan="Basico" data-user-status="Activo" data-user-company="Prisma Ops">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                          <div class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-cyan-100 text-sm font-semibold text-cyan-700">VC</div>
+                          <div>
+                            <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Valeria Cruz</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">valeria@agenthub.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-slate-200 bg-slate-100 dark:bg-slate-700 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-slate-200">Basico</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Activo</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="users-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Valeria Cruz" aria-expanded="false">⋮</button>
+                          <div class="users-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="users-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="users-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="user-detail-modal" class="fixed inset-0 z-30 hidden">
+              <div id="user-detail-backdrop" class="absolute inset-0 bg-slate-950/45"></div>
+              <div class="relative z-10 flex min-h-full items-center justify-center p-4">
+                <article class="w-full max-w-lg rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-6 shadow-xl">
+                  <div class="mb-5 flex items-start justify-between gap-4">
+                    <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-100">User Detail</h4>
+                    <button id="user-detail-close" type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Close user detail">×</button>
+                  </div>
+
+                  <dl class="space-y-3 text-sm">
+                    <div class="grid grid-cols-[92px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Name</dt>
+                      <dd id="modal-user-name" class="font-semibold text-slate-900 dark:text-slate-100"></dd>
+                    </div>
+                    <div class="grid grid-cols-[92px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Email</dt>
+                      <dd id="modal-user-email" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                    <div class="grid grid-cols-[92px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Plan</dt>
+                      <dd id="modal-user-plan" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                    <div class="grid grid-cols-[92px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Status</dt>
+                      <dd id="modal-user-status" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                    <div class="grid grid-cols-[92px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Company</dt>
+                      <dd id="modal-user-company" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                  </dl>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="agents" class="hidden space-y-5">
+            <div>
+              <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-100">Agents</h3>
+              <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Manage agent ownership, current status and active skills setup.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-agent-card data-agent-name="Atlas" data-agent-owner="Laura Gomez" data-agent-prompt="Eres Atlas. Investiga fuentes confiables, sintetiza hallazgos y entrega resultados con trazabilidad y claridad ejecutiva.">
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <div class="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-blue-100 text-sm font-semibold text-blue-700">AT</div>
+                    <div>
+                      <h4 class="text-base font-semibold text-slate-900 dark:text-slate-100">Atlas</h4>
+                      <p class="text-sm text-slate-500 dark:text-slate-400">Owner: Laura Gomez</p>
+                    </div>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button type="button" class="agents-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Agent actions for Atlas" aria-expanded="false">⋮</button>
+                    <div class="agents-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                      <button type="button" class="agents-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="configure">Configurar</button>
+                      <button type="button" class="agents-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4 flex items-center justify-between gap-3">
+                  <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Activo</span>
+                  <button type="button" class="agents-skills-toggle inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-700/50" aria-label="Toggle active skills for Atlas" aria-expanded="false">
+                    <span>Skills activas</span>
+                    <span class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 px-1 text-xs font-semibold text-slate-700 dark:text-slate-200">2</span>
+                    <span aria-hidden="true" class="agents-skills-arrow transition-transform duration-300">▾</span>
+                  </button>
+                </div>
+
+                <div class="agents-skills-panel mt-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-out">
+                  <div class="flex flex-wrap gap-2 border-t border-slate-100 pt-3">
+                    <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">Investigacion Web</span>
+                    <span class="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-700">Analisis de Datos</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-agent-card data-agent-name="Nexo" data-agent-owner="Martin Perez" data-agent-prompt="Eres Nexo. Prioriza tickets urgentes, propone respuesta breve y registra causa raiz cuando detectes patrones de error.">
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <div class="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-rose-100 text-sm font-semibold text-rose-700">NX</div>
+                    <div>
+                      <h4 class="text-base font-semibold text-slate-900 dark:text-slate-100">Nexo</h4>
+                      <p class="text-sm text-slate-500 dark:text-slate-400">Owner: Martin Perez</p>
+                    </div>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button type="button" class="agents-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Agent actions for Nexo" aria-expanded="false">⋮</button>
+                    <div class="agents-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                      <button type="button" class="agents-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="configure">Configurar</button>
+                      <button type="button" class="agents-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4 flex items-center justify-between gap-3">
+                  <span class="inline-flex items-center rounded-full border border-rose-200 bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-700">Fallando</span>
+                  <button type="button" class="agents-skills-toggle inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-700/50" aria-label="Toggle active skills for Nexo" aria-expanded="false">
+                    <span>Skills activas</span>
+                    <span class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 px-1 text-xs font-semibold text-slate-700 dark:text-slate-200">2</span>
+                    <span aria-hidden="true" class="agents-skills-arrow transition-transform duration-300">▾</span>
+                  </button>
+                </div>
+
+                <div class="agents-skills-panel mt-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-out">
+                  <div class="flex flex-wrap gap-2 border-t border-slate-100 pt-3">
+                    <span class="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-700">Analisis de Datos</span>
+                    <span class="inline-flex items-center rounded-full border border-cyan-200 bg-cyan-50 px-2.5 py-1 text-xs font-semibold text-cyan-700">Atencion al Cliente</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-agent-card data-agent-name="Helix" data-agent-owner="Sofia Rojas" data-agent-prompt="Eres Helix. Realiza exploracion inicial, valida enlaces y entrega resumen de riesgos por tema.">
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <div class="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-amber-100 text-sm font-semibold text-amber-700">HX</div>
+                    <div>
+                      <h4 class="text-base font-semibold text-slate-900 dark:text-slate-100">Helix</h4>
+                      <p class="text-sm text-slate-500 dark:text-slate-400">Owner: Sofia Rojas</p>
+                    </div>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button type="button" class="agents-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Agent actions for Helix" aria-expanded="false">⋮</button>
+                    <div class="agents-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                      <button type="button" class="agents-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="configure">Configurar</button>
+                      <button type="button" class="agents-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4 flex items-center justify-between gap-3">
+                  <span class="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">Inactivo</span>
+                  <button type="button" class="agents-skills-toggle inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-700/50" aria-label="Toggle active skills for Helix" aria-expanded="false">
+                    <span>Skills activas</span>
+                    <span class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 px-1 text-xs font-semibold text-slate-700 dark:text-slate-200">1</span>
+                    <span aria-hidden="true" class="agents-skills-arrow transition-transform duration-300">▾</span>
+                  </button>
+                </div>
+
+                <div class="agents-skills-panel mt-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-out">
+                  <div class="flex flex-wrap gap-2 border-t border-slate-100 pt-3">
+                    <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">Investigacion Web</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-agent-card data-agent-name="Prisma" data-agent-owner="Valeria Cruz" data-agent-prompt="Eres Prisma. Ejecuta controles QA, documenta evidencias y reporta desviaciones con severidad accionable.">
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <div class="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-100 text-sm font-semibold text-emerald-700">PR</div>
+                    <div>
+                      <h4 class="text-base font-semibold text-slate-900 dark:text-slate-100">Prisma</h4>
+                      <p class="text-sm text-slate-500 dark:text-slate-400">Owner: Valeria Cruz</p>
+                    </div>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button type="button" class="agents-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Agent actions for Prisma" aria-expanded="false">⋮</button>
+                    <div class="agents-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                      <button type="button" class="agents-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="configure">Configurar</button>
+                      <button type="button" class="agents-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4 flex items-center justify-between gap-3">
+                  <span class="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Activo</span>
+                  <button type="button" class="agents-skills-toggle inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-700/50" aria-label="Toggle active skills for Prisma" aria-expanded="false">
+                    <span>Skills activas</span>
+                    <span class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 px-1 text-xs font-semibold text-slate-700 dark:text-slate-200">3</span>
+                    <span aria-hidden="true" class="agents-skills-arrow transition-transform duration-300">▾</span>
+                  </button>
+                </div>
+
+                <div class="agents-skills-panel mt-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-out">
+                  <div class="flex flex-wrap gap-2 border-t border-slate-100 pt-3">
+                    <span class="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-700">Analisis de Datos</span>
+                    <span class="inline-flex items-center rounded-full border border-cyan-200 bg-cyan-50 px-2.5 py-1 text-xs font-semibold text-cyan-700">Atencion al Cliente</span>
+                    <span class="inline-flex items-center rounded-full border border-fuchsia-200 bg-fuchsia-50 px-2.5 py-1 text-xs font-semibold text-fuchsia-700">Automatizacion QA</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div id="agent-config-modal" class="fixed inset-0 z-30 hidden">
+              <div id="agent-config-backdrop" class="absolute inset-0 bg-slate-950/45"></div>
+              <div class="relative z-10 flex min-h-full items-center justify-center p-4">
+                <article class="w-full max-w-2xl rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-6 shadow-xl">
+                  <div class="mb-5 flex items-start justify-between gap-4">
+                    <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Configure Agent</h4>
+                    <button id="agent-config-close" type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Close agent config">×</button>
+                  </div>
+
+                  <dl class="space-y-3 text-sm">
+                    <div class="grid grid-cols-[110px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Agent</dt>
+                      <dd id="modal-agent-name" class="font-semibold text-slate-900 dark:text-slate-100"></dd>
+                    </div>
+                    <div class="grid grid-cols-[110px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Owner</dt>
+                      <dd id="modal-agent-owner" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                    <div class="space-y-2">
+                      <label for="modal-agent-prompt" class="block font-medium text-slate-500 dark:text-slate-400">System Prompt</label>
+                      <textarea id="modal-agent-prompt" class="h-40 w-full rounded-lg border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm text-slate-700 dark:text-slate-200 focus:border-blue-400 focus:outline-none" aria-label="Agent system prompt"></textarea>
+                    </div>
+                  </dl>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="skills" class="hidden space-y-5">
+            <div>
+              <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-100">Skills</h3>
+            </div>
+
+            <article class="rounded-xl border border-blue-100 bg-blue-50/70 p-5 shadow-sm">
+              <p class="text-sm leading-6 text-slate-700 dark:text-slate-200">
+                Una skill es una capacidad que puede añadirse a un agente de IA para ampliar lo que puede hacer. Por ejemplo,
+                navegacion web, lectura o analisis de documentos y gestion de calendarios.
+              </p>
+            </article>
+
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-skill-name="Investigacion Web" data-skill-description="Busca y resume informacion de fuentes abiertas." data-skill-count="2">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-700">◉</div>
+                  <div class="relative inline-block text-left">
+                    <button type="button" class="skills-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Investigacion Web" aria-expanded="false">⋮</button>
+                    <div class="skills-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                      <button type="button" class="skills-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                      <button type="button" class="skills-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+                <h4 class="mt-4 text-base font-semibold text-slate-900 dark:text-slate-100">Investigacion Web</h4>
+                <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Busca y resume informacion de fuentes abiertas.</p>
+                <p class="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Agentes habilitados: <span class="text-slate-700 dark:text-slate-200">2</span></p>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-skill-name="Analisis de Datos" data-skill-description="Limpia, agrega y valida datasets operativos." data-skill-count="3">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700">◈</div>
+                  <div class="relative inline-block text-left">
+                    <button type="button" class="skills-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Analisis de Datos" aria-expanded="false">⋮</button>
+                    <div class="skills-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                      <button type="button" class="skills-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                      <button type="button" class="skills-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+                <h4 class="mt-4 text-base font-semibold text-slate-900 dark:text-slate-100">Analisis de Datos</h4>
+                <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Limpia, agrega y valida datasets operativos.</p>
+                <p class="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Agentes habilitados: <span class="text-slate-700 dark:text-slate-200">3</span></p>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-skill-name="Atencion al Cliente" data-skill-description="Redacta respuestas y clasifica incidencias." data-skill-count="2">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-100 text-cyan-700">◎</div>
+                  <div class="relative inline-block text-left">
+                    <button type="button" class="skills-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Atencion al Cliente" aria-expanded="false">⋮</button>
+                    <div class="skills-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                      <button type="button" class="skills-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                      <button type="button" class="skills-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+                <h4 class="mt-4 text-base font-semibold text-slate-900 dark:text-slate-100">Atencion al Cliente</h4>
+                <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Redacta respuestas y clasifica incidencias.</p>
+                <p class="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Agentes habilitados: <span class="text-slate-700 dark:text-slate-200">2</span></p>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm" data-skill-name="Automatizacion QA" data-skill-description="Ejecuta checks repetibles sobre flujos definidos." data-skill-count="1">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-fuchsia-100 text-fuchsia-700">✦</div>
+                  <div class="relative inline-block text-left">
+                    <button type="button" class="skills-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Automatizacion QA" aria-expanded="false">⋮</button>
+                    <div class="skills-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                      <button type="button" class="skills-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                      <button type="button" class="skills-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="delete">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+                <h4 class="mt-4 text-base font-semibold text-slate-900 dark:text-slate-100">Automatizacion QA</h4>
+                <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Ejecuta checks repetibles sobre flujos definidos.</p>
+                <p class="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Agentes habilitados: <span class="text-slate-700 dark:text-slate-200">1</span></p>
+              </article>
+            </div>
+
+            <div id="skill-detail-modal" class="fixed inset-0 z-30 hidden">
+              <div id="skill-detail-backdrop" class="absolute inset-0 bg-slate-950/45"></div>
+              <div class="relative z-10 flex min-h-full items-center justify-center p-4">
+                <article class="w-full max-w-lg rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-6 shadow-xl">
+                  <div class="mb-5 flex items-start justify-between gap-4">
+                    <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Skill Detail</h4>
+                    <button id="skill-detail-close" type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Close skill detail">×</button>
+                  </div>
+
+                  <dl class="space-y-3 text-sm">
+                    <div class="grid grid-cols-[120px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Nombre</dt>
+                      <dd id="modal-skill-name" class="font-semibold text-slate-900 dark:text-slate-100"></dd>
+                    </div>
+                    <div class="grid grid-cols-[120px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Descripcion</dt>
+                      <dd id="modal-skill-description" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                    <div class="grid grid-cols-[120px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Agentes</dt>
+                      <dd id="modal-skill-count" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                  </dl>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="contracts" class="hidden space-y-5">
+            <div>
+              <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-100">Contracts</h3>
+            </div>
+
+            <div class="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 shadow-sm">
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                  <thead class="bg-slate-50 dark:bg-slate-700/50">
+                    <tr>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Cliente</th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Agente</th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Skills</th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Inicio</th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Fin</th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Importe pagado</th>
+                      <th scope="col" class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-700 dark:bg-slate-800">
+                    <tr class="hover:bg-slate-50 dark:bg-slate-700/50/80" data-contract-client="Orbita Labs" data-contract-agent="Atlas" data-contract-start="2026-06-10" data-contract-end="2026-06-14" data-contract-skills="Investigacion Web::600|Analisis de Datos::400" data-contract-subtotal="1000" data-contract-discount-label="SIN_CUPON" data-contract-discount-amount="0" data-contract-total="1000">
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Orbita Labs</td>
+                      <td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-200">Atlas</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">Investigacion Web, Analisis de Datos</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-06-10</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-06-14</td>
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">$1,000</td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="contracts-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Orbita Labs" aria-expanded="false">⋮</button>
+                          <div class="contracts-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="contracts-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="hover:bg-slate-50 dark:bg-slate-700/50/80" data-contract-client="Nexo Retail" data-contract-agent="Nexo" data-contract-start="2026-07-01" data-contract-end="2026-07-02" data-contract-skills="Atencion al Cliente::500" data-contract-subtotal="500" data-contract-discount-label="SOPORTE10" data-contract-discount-amount="50" data-contract-total="450">
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Nexo Retail</td>
+                      <td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-200">Nexo</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">Atencion al Cliente</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-07-01</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-07-02</td>
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">$450</td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="contracts-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Nexo Retail" aria-expanded="false">⋮</button>
+                          <div class="contracts-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="contracts-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="hover:bg-slate-50 dark:bg-slate-700/50/80" data-contract-client="Prisma Ops" data-contract-agent="Prisma" data-contract-start="2026-07-03" data-contract-end="2026-07-04" data-contract-skills="Automatizacion QA::700|Analisis de Datos::300" data-contract-subtotal="1000" data-contract-discount-label="PROMO_QA15" data-contract-discount-amount="150" data-contract-total="850">
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Prisma Ops</td>
+                      <td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-200">Prisma</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">Automatizacion QA, Analisis de Datos</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-07-03</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-07-04</td>
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">$850</td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="contracts-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Prisma Ops" aria-expanded="false">⋮</button>
+                          <div class="contracts-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="contracts-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="hover:bg-slate-50 dark:bg-slate-700/50/80" data-contract-client="Clinica Nova" data-contract-agent="Atlas" data-contract-start="2026-07-04" data-contract-end="2026-07-05" data-contract-skills="Investigacion Web::450" data-contract-subtotal="450" data-contract-discount-label="BIENVENIDA20" data-contract-discount-amount="90" data-contract-total="360">
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Clinica Nova</td>
+                      <td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-200">Atlas</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">Investigacion Web</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-07-04</td>
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-07-05</td>
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">$360</td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="contracts-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for Clinica Nova" aria-expanded="false">⋮</button>
+                          <div class="contracts-dropdown absolute right-0 z-20 mt-2 hidden w-36 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="contracts-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="contract-detail-modal" class="fixed inset-0 z-30 hidden">
+              <div id="contract-detail-backdrop" class="absolute inset-0 bg-slate-950/45"></div>
+              <div class="relative z-10 flex min-h-full items-center justify-center p-4">
+                <article class="w-full max-w-2xl rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-6 shadow-xl">
+                  <div class="mb-5 flex items-start justify-between gap-4">
+                    <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Contract Detail</h4>
+                    <button id="contract-detail-close" type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Close contract detail">×</button>
+                  </div>
+
+                  <dl class="space-y-3 text-sm">
+                    <div class="grid grid-cols-[140px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Cliente</dt>
+                      <dd id="modal-contract-client" class="font-semibold text-slate-900 dark:text-slate-100"></dd>
+                    </div>
+                    <div class="grid grid-cols-[140px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Agente</dt>
+                      <dd id="modal-contract-agent" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                    <div class="grid grid-cols-[140px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Fecha inicio</dt>
+                      <dd id="modal-contract-start" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                    <div class="grid grid-cols-[140px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Fecha fin</dt>
+                      <dd id="modal-contract-end" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                  </dl>
+
+                  <div class="mt-5 rounded-lg border border-slate-200">
+                    <div class="border-b border-slate-200 px-4 py-3">
+                      <h5 class="text-sm font-semibold text-slate-900 dark:text-slate-100">Skills contratadas</h5>
+                    </div>
+                    <ul id="modal-contract-skills" class="divide-y divide-slate-200 dark:divide-slate-700"></ul>
+                  </div>
+
+                  <div class="mt-5 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+                    <div class="rounded-lg border border-slate-200 bg-slate-50 dark:bg-slate-700/50 px-4 py-3">
+                      <p class="text-slate-500 dark:text-slate-400">Subtotal</p>
+                      <p id="modal-contract-subtotal" class="mt-1 font-semibold text-slate-900 dark:text-slate-100"></p>
+                    </div>
+                    <div class="rounded-lg border border-slate-200 bg-slate-50 dark:bg-slate-700/50 px-4 py-3">
+                      <p class="text-slate-500 dark:text-slate-400">Descuento / Cupón</p>
+                      <p id="modal-contract-discount" class="mt-1 font-semibold text-slate-900 dark:text-slate-100"></p>
+                    </div>
+                  </div>
+
+                  <div class="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm">
+                    <p class="text-emerald-700">Importe total pagado</p>
+                    <p id="modal-contract-total" class="mt-1 text-lg font-semibold text-emerald-800"></p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="errors" class="hidden space-y-5">
+            <div>
+              <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-100">Error Log</h3>
+            </div>
+
+            <div class="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 shadow-sm">
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                  <thead class="bg-slate-50 dark:bg-slate-700/50">
+                    <tr>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Timestamp</th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Agent</th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Error Type</th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Description</th>
+                      <th scope="col" class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-700 dark:bg-slate-800">
+                    <tr class="error-row hover:bg-slate-50 dark:bg-slate-700/50/80" data-error-timestamp="2026-06-15T10:22:31Z" data-error-agent="Nexo" data-error-type="TimeoutError" data-error-severity="Alta" data-error-description="Timeout al consultar historial del ticket" data-error-trace="Traceback: request_support_api -> timeout after 30s -> retry_exhausted" data-error-state="pendiente">
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-06-15 10:22:31</td>
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Nexo</td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-rose-200 bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-700">Timeout</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <p class="text-sm text-slate-700 dark:text-slate-200">Timeout al consultar historial del ticket</p>
+                        <span class="error-state-badge mt-1 inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-700">Pendiente</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="errors-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for error 1" aria-expanded="false">⋮</button>
+                          <div class="errors-dropdown absolute right-0 z-20 mt-2 hidden w-44 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="resolve">Marcar como resuelto</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="error-row hover:bg-slate-50 dark:bg-slate-700/50/80" data-error-timestamp="2026-06-15T11:40:05Z" data-error-agent="Nexo" data-error-type="ValidationError" data-error-severity="Media" data-error-description="Payload de respuesta sin campo status" data-error-trace="Traceback: parse_ticket_payload -> missing key status -> validation_failed" data-error-state="resuelto">
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-06-15 11:40:05</td>
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Nexo</td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">Validation</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <p class="text-sm text-slate-700 dark:text-slate-200">Payload de respuesta sin campo status</p>
+                        <span class="error-state-badge mt-1 inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">Resuelto</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="errors-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for error 2" aria-expanded="false">⋮</button>
+                          <div class="errors-dropdown absolute right-0 z-20 mt-2 hidden w-44 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="resolve">Marcar como resuelto</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="error-row hover:bg-slate-50 dark:bg-slate-700/50/80" data-error-timestamp="2026-06-16T09:12:47Z" data-error-agent="Atlas" data-error-type="ToolExecutionError" data-error-severity="Baja" data-error-description="Fallo puntual en conector de busqueda" data-error-trace="Traceback: run_search_connector -> provider_503 -> fallback_applied" data-error-state="resuelto">
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-06-16 09:12:47</td>
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Atlas</td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-sky-200 bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-700">Tool Error</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <p class="text-sm text-slate-700 dark:text-slate-200">Fallo puntual en conector de busqueda</p>
+                        <span class="error-state-badge mt-1 inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">Resuelto</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="errors-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for error 3" aria-expanded="false">⋮</button>
+                          <div class="errors-dropdown absolute right-0 z-20 mt-2 hidden w-44 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="resolve">Marcar como resuelto</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="error-row hover:bg-slate-50 dark:bg-slate-700/50/80" data-error-timestamp="2026-06-21T14:03:19Z" data-error-agent="Prisma" data-error-type="MemoryError" data-error-severity="Alta" data-error-description="Exceso de memoria en corrida QA extensa" data-error-trace="Traceback: qa_batch_runner -> memory_limit_exceeded at step 42" data-error-state="pendiente">
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-06-21 14:03:19</td>
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Prisma</td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-semibold text-red-700">Critical</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <p class="text-sm text-slate-700 dark:text-slate-200">Exceso de memoria en corrida QA extensa</p>
+                        <span class="error-state-badge mt-1 inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-700">Pendiente</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="errors-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for error 4" aria-expanded="false">⋮</button>
+                          <div class="errors-dropdown absolute right-0 z-20 mt-2 hidden w-44 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="resolve">Marcar como resuelto</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="error-row hover:bg-slate-50 dark:bg-slate-700/50/80" data-error-timestamp="2026-06-22T08:58:10Z" data-error-agent="Prisma" data-error-type="AuthError" data-error-severity="Media" data-error-description="Token expirado al abrir entorno de pruebas" data-error-trace="Traceback: auth_client -> token_expired -> refresh_required" data-error-state="resuelto">
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-06-22 08:58:10</td>
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Prisma</td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-violet-200 bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700">Auth Error</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <p class="text-sm text-slate-700 dark:text-slate-200">Token expirado al abrir entorno de pruebas</p>
+                        <span class="error-state-badge mt-1 inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">Resuelto</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="errors-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for error 5" aria-expanded="false">⋮</button>
+                          <div class="errors-dropdown absolute right-0 z-20 mt-2 hidden w-44 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="resolve">Marcar como resuelto</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="error-row hover:bg-slate-50 dark:bg-slate-700/50/80" data-error-timestamp="2026-06-26T16:44:52Z" data-error-agent="Atlas" data-error-type="NetworkError" data-error-severity="Baja" data-error-description="Reintento por latencia en fuente externa" data-error-trace="Traceback: fetch_external_source -> network_jitter -> recovered_on_retry" data-error-state="pendiente">
+                      <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">2026-06-26 16:44:52</td>
+                      <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Atlas</td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center rounded-full border border-sky-200 bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-700">API Error</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <p class="text-sm text-slate-700 dark:text-slate-200">Reintento por latencia en fuente externa</p>
+                        <span class="error-state-badge mt-1 inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-700">Pendiente</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="relative inline-block text-left">
+                          <button type="button" class="errors-menu-toggle inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-base text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Actions for error 6" aria-expanded="false">⋮</button>
+                          <div class="errors-dropdown absolute right-0 z-20 mt-2 hidden w-44 rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 py-1 shadow-lg">
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="detail">Ver detalle</button>
+                            <button type="button" class="errors-action block w-full px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" data-action="resolve">Marcar como resuelto</button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="error-detail-modal" class="fixed inset-0 z-30 hidden">
+              <div id="error-detail-backdrop" class="absolute inset-0 bg-slate-950/45"></div>
+              <div class="relative z-10 flex min-h-full items-center justify-center p-4">
+                <article class="w-full max-w-2xl rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-6 shadow-xl">
+                  <div class="mb-5 flex items-start justify-between gap-4">
+                    <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Error Detail</h4>
+                    <button id="error-detail-close" type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 dark:bg-slate-700" aria-label="Close error detail">×</button>
+                  </div>
+
+                  <dl class="space-y-3 text-sm">
+                    <div class="grid grid-cols-[120px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Timestamp</dt>
+                      <dd id="modal-error-timestamp" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                    <div class="grid grid-cols-[120px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Agente</dt>
+                      <dd id="modal-error-agent" class="font-semibold text-slate-900 dark:text-slate-100"></dd>
+                    </div>
+                    <div class="grid grid-cols-[120px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Tipo</dt>
+                      <dd id="modal-error-type" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                    <div class="grid grid-cols-[120px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Gravedad</dt>
+                      <dd id="modal-error-severity" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                    <div class="grid grid-cols-[120px_1fr] gap-3">
+                      <dt class="font-medium text-slate-500 dark:text-slate-400">Descripcion</dt>
+                      <dd id="modal-error-description" class="text-slate-700 dark:text-slate-200"></dd>
+                    </div>
+                  </dl>
+
+                  <div class="mt-5">
+                    <p class="mb-2 text-sm font-medium text-slate-500 dark:text-slate-400">Traza completa</p>
+                    <pre id="modal-error-trace" class="overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 dark:bg-slate-700/50 p-4 text-xs text-slate-700 dark:text-slate-200"></pre>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
